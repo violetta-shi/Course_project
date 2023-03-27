@@ -35,8 +35,8 @@ function App() {
                 <button onClick={fetchData}>
                     click to fetch data from back-end
                 </button>
-                {users.map(user => {
-                    return (<p>Id: {user.id}, Email: {user.email}, Password: {user.password}</p>)
+                {users.map(({id, email, password}) => {
+                    return (<p key={id}>Id: {id}, Email: {email}, Password: {password}</p>)
                 })}
             </div>
             <p className="read-the-docs">
