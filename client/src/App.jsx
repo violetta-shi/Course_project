@@ -1,16 +1,20 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import {useDispatch, useSelector} from "react-redux";
+import {fetchUsers, getUsers} from "./store/userSlice";
 
 function App() {
     const [count, setCount] = useState(0);
-    const [users, setUsers] = useState([]);
+    const {state, data} = useSelector(state => state.users);
+    const dispatch = useDispatch();
 
-    const fetchData = async () => {
-        const response = await fetch('/api/v1/users');
-        setUsers(await response.json());
-    }
+    useEffect(() => {
+        if (state === 'loading') {
+            dispatch(getUsers())
+        }
+    }, [state, dispatch]);
 
     return (
         <div className="App">
@@ -32,12 +36,15 @@ function App() {
                 </p>
             </div>
             <div className="card">
-                <button onClick={fetchData}>
-                    click to fetch data from back-end
-                </button>
-                {users.map(({id, email, password}) => {
-                    return (<p key={id}>Id: {id}, Email: {email}, Password: {password}</p>)
-                })}
+                {state === 'loading' && <p>loading data</p>}
+                {state === 'loaded' && <>
+                    <button onClick={() => dispatch(fetchUsers())}>
+                        click here to refresh users
+                    </button>
+                    {data.map(({id, email, role}) => {
+                        return (<p key={id}>Id: {id}, Email: {email}, Role: {role}</p>)
+                    })}
+                </>}
             </div>
             <p className="read-the-docs">
                 Click on the Vite and React logos to learn more
