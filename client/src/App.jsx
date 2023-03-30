@@ -1,20 +1,35 @@
-import {useEffect, useState} from 'react'
+import {useCallback, useEffect, useState} from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import {useDispatch, useSelector} from "react-redux";
 import {fetchUsers, getUsers} from "./store/userSlice";
+import {getSelf, logout} from "./store/authSlice";
+import {Link, Outlet, useNavigate} from "react-router-dom";
 
 function App() {
     const [count, setCount] = useState(0);
     const {state, data} = useSelector(state => state.users);
+    const currentUser = useSelector(state => state.auth.currentUser);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (state === 'loading') {
             dispatch(getUsers())
         }
     }, [state, dispatch]);
+
+    useEffect(() => {
+        dispatch(getSelf());
+    }, [currentUser]);
+
+    const handleLogout = useCallback((event) => {
+        event.preventDefault();
+
+        dispatch(logout());
+        navigate('/');
+    }, []);
 
     return (
         <div className="App">
@@ -35,6 +50,16 @@ function App() {
                     Edit <code>src/App.jsx</code> and save to test HMR
                 </p>
             </div>
+            <div className="card">
+                <ul>
+                    <li><Link to={'/'}>Home</Link></li>
+                    {!currentUser && <li><Link to={'/login'}>Login</Link></li>}
+                    {currentUser && <li><a onClick={handleLogout} href='#'>Logout</a></li>}
+                    <li><Link to={'/about'}>About</Link></li>
+                </ul>
+            </div>
+            <Outlet/>
+
             <div className="card">
                 {state === 'loading' && <p>loading data</p>}
                 {state === 'loaded' && <>

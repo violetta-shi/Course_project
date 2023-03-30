@@ -17,7 +17,7 @@ app.use(authMiddleware.authenticate);
 
 // routes
 app.use('/api/v1/users', users);
-app.use('/api/auth', auth);
+app.use('/api/v1/auth', auth);
 
 //TODO middleware test, remove it
 app.get('/api/admin', authMiddleware.ensureAdminRole, (req, res) => {

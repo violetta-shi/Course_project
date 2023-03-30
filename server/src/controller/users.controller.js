@@ -12,6 +12,10 @@ const findAll = async (req, res, next) => {
     }
 };
 
+const self = async (req, res) => {
+    return res.json(req.authentication.user)
+};
+
 const create = async (req, res, next) => {
     try {
         const user = req.body;
@@ -36,5 +40,6 @@ const create = async (req, res, next) => {
 
 module.exports = {
     findAll,
+    self,
     create,
 };

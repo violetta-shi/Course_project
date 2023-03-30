@@ -16,22 +16,17 @@ export async function client(endpoint, { body, ...customConfig } = {}) {
         config.body = JSON.stringify(body)
     }
 
-    let data
     try {
         const response = await fetch(endpoint, config)
-        data = await response.json()
-        if (response.ok) {
-            // Return a result object similar to Axios
-            return {
-                status: response.status,
-                data,
-                headers: response.headers,
-                url: response.url,
-            }
-        }
-        throw new Error(response.statusText)
+        const text = await response.text()
+        return {
+            status: response.status,
+            data : text.length ? JSON.parse(text) : null,
+            headers: response.headers,
+            url: response.url,
+        };
     } catch (err) {
-        return Promise.reject(err.message ? err.message : data)
+        return Promise.reject(err?.message)
     }
 }
 
