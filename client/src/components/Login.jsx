@@ -1,23 +1,15 @@
-import {useCallback, useRef } from "react";
-import {Navigate, useNavigate} from "react-router-dom";
+import {useCallback} from "react";
+import {Navigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "../store/authSlice";
+import {useForm} from "react-hook-form";
 
 export default function Login() {
     const { currentUser, loginErrorMessage } = useSelector(state => state.auth);
     const dispatch = useDispatch();
+    const { register, handleSubmit } = useForm();
 
-    const emailRef = useRef();
-    const passwordRef = useRef();
-
-    const handleSubmit = useCallback((event) => {
-        event.preventDefault();
-
-        const body = {
-            email: emailRef.current?.value,
-            password: passwordRef.current?.value,
-        }
-
+    const onSubmit = useCallback((body) => {
         dispatch(login(body));
     }, []);
 
@@ -27,22 +19,12 @@ export default function Login() {
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <label>
-                    Email:
-                    <input
-                        name="email"
-                        type="email"
-                        ref={emailRef}
-                    />
+                    Email: <input {...register("email")}/>
                 </label>
                 <label>
-                    Password:
-                    <input
-                        name="password"
-                        type="password"
-                        ref={passwordRef}
-                    />
+                    Password: <input type="password" {...register("password")}/>
                 </label>
                 <button type="submit">Log in</button>
                 {loginErrorMessage && <p style={{'color': 'red'}}>{loginErrorMessage}</p>}
