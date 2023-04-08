@@ -2,7 +2,7 @@
     font-family: Oswald;
 }
 html {
-    background-image: url('../recourse/background.jpg');
+    background-image: url('../../img/background.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
