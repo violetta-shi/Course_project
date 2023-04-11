@@ -154,6 +154,14 @@ body {
     background-color: var(--gray-light);
 }
 
+.btn-p0.dropdown-toggle:after {
+    margin-left: 0;
+}
+
+.dropdown-menu {
+    --bs-dropdown-link-active-bg: var(--orange);
+}
+
 .info {
     color: #666666;
     font-family: 'PT Sans', sans-serif;

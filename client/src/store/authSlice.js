@@ -1,9 +1,10 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {client} from "../api/client";
+// import {client} from "../api/client";
+import {client} from "../mock/mockClient";
 
 const initialState = {
-    currentUserLoaded: false,
-    currentUser: null,
+    isLoading: false,
+    currentUser: undefined,
     loginErrorMessage: null
 }
 
@@ -22,6 +23,8 @@ const authorizationHeader = () => {
     return accessToken ? { 'Authorization': `Bearer ${accessToken}` } : {};
 }
 
+export const authStateSelector = state => state.auth;
+
 export const getSelf = createAsyncThunk(
     'auth/getSelf',
     async () => {
@@ -30,8 +33,8 @@ export const getSelf = createAsyncThunk(
     },
     {
         condition: (_, { getState }) => {
-            const { currentUserLoaded } = getState().auth;
-            return !currentUserLoaded;
+            const { currentUser } = authStateSelector(getState());
+            return currentUser === undefined;
         }
     }
 );
@@ -51,16 +54,21 @@ export const authSlice = createSlice({
         logout: (state) => {
             clearAccessToken();
             state.currentUser = null;
+        },
+        dismissErrorMessage: (state) => {
+            state.loginErrorMessage = null;
         }
     },
     extraReducers(builder) {
         builder
             .addCase(getSelf.fulfilled, (state, action) => {
-                state.currentUserLoaded = true;
-                state.currentUser = action.payload;
+                state.currentUser = action.payload || null;
                 if (!action.payload) {
                     clearAccessToken();
                 }
+            })
+            .addCase(login.pending, (state, action) => {
+                state.isLoading = true;
             })
             .addCase(login.fulfilled, (state, action) => {
                 const { status, data } = action.payload;
@@ -68,12 +76,13 @@ export const authSlice = createSlice({
                     state.currentUser = data;
                     storeAccessToken(data.access_token);
                 } else {
-                    state.loginErrorMessage = data?.message || 'login failed';
+                    state.loginErrorMessage = data?.message || 'Не удалось выполнить логин';
                 }
+                state.isLoading = false;
             })
     }
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, dismissErrorMessage } = authSlice.actions;
 
 export default authSlice.reducer;
