@@ -1,4 +1,4 @@
-import {getSelfResponse, loginResponse} from "./mockResponses";
+import {categoriesResponse, getSelfResponse, loginResponse, productsResponse} from "./mockResponses";
 
 const timeoutMs = 1000;
 const respond = (data, timeout = timeoutMs) => new Promise(resolve => {
@@ -9,20 +9,19 @@ const respond = (data, timeout = timeoutMs) => new Promise(resolve => {
     }
 });
 
+const productsPattern = new URLPattern("/api/v1/categories/:id/products", "http://test");
 export async function client(endpoint, {body, ...customConfig} = {}) {
-    console.log(`Calling '${endpoint}' with body ${body}`);
+    console.log(`Calling '${endpoint}'`, body);
     if (endpoint === '/api/v1/users/self' && customConfig.method === 'GET') {
         return respond(getSelfResponse, 0);
     } else if (endpoint === '/api/v1/auth/login') {
         return respond(loginResponse);
+    } else if (endpoint === '/api/v1/categories' && customConfig.method === 'GET') {
+        return respond(categoriesResponse);
+    } else if (endpoint === '/api/v1/orders') {
+        return respond({});
+    } else if (productsPattern.test(`http://test${endpoint}`) && customConfig.method === 'GET') {
+        return respond(productsResponse);
     }
     return new Promise(resolve => resolve({}));
-}
-
-client.get = function (endpoint, customConfig = {}) {
-    return client(endpoint, {...customConfig, method: 'GET'})
-}
-
-client.post = function (endpoint, body, customConfig = {}) {
-    return client(endpoint, {...customConfig, body})
 }

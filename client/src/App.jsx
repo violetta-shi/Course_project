@@ -1,9 +1,11 @@
 import {Outlet} from "react-router-dom";
-import {Container, Spinner} from "react-bootstrap";
-import AppHeader from "./components/navbar/AppHeader";
+import {Container} from "react-bootstrap";
+import AppHeader from "./components/header/AppHeader";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
-import {getSelf, authStateSelector} from "./store/authSlice";
+import {authStateSelector, getSelf} from "./store/authSlice";
+import Loader from "./components/util/Loader";
+import NotificationContainer from "./components/util/NotificationContainer";
 
 export default function App() {
     const { currentUser } = useSelector(authStateSelector);
@@ -14,16 +16,15 @@ export default function App() {
 
     return (
         currentUser === undefined
-            ? (
-                <div className="d-flex justify-content-center">
-                    <Spinner animation="grow" variant="light"/>
-                </div>
-            )
+            ? <Loader/>
             : (
-                <Container>
-                    <AppHeader/>
-                    <Outlet/>
-                </Container>
+                <>
+                    <Container>
+                        <AppHeader/>
+                        <Outlet/>
+                    </Container>
+                    <NotificationContainer/>
+                </>
             )
     )
 }

@@ -1,6 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-// import {client} from "../api/client";
-import {client} from "../mock/mockClient";
+import {client} from "../api/client";
 
 const initialState = {
     isLoading: false,

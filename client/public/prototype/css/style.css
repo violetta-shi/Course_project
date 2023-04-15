@@ -45,6 +45,10 @@ body {
     font-size: 3rem;
 }
 
+.fs-5-5 {
+    font-size: 1.125rem;
+}
+
 .btn-orange {
     --bs-btn-color: #fff;
     --bs-btn-bg: var(--orange);
@@ -94,6 +98,8 @@ body {
     --bs-btn-disabled-color: #000;
     --bs-btn-disabled-bg: var(--gray-dark);
     --bs-btn-disabled-border-color: var(--gray-dark);
+    --bs-nav-link-color: #000;
+    --bs-nav-link-hover-color: #fff;
 }
 
 .btn-extra-lg {

@@ -1,6 +1,12 @@
+import { client as mockClient } from '../mock/mockClient';
+
 // A tiny wrapper around fetch(), borrowed from
 // https://kentcdodds.com/blog/replace-axios-with-a-simple-custom-fetch-wrapper
 export async function client(endpoint, { body, ...customConfig } = {}) {
+    if (import.meta.env.VITE_USE_MOCK) {
+        return mockClient(endpoint, {body, ...customConfig});
+    }
+
     const headers = { 'Content-Type': 'application/json' }
 
     const config = {
