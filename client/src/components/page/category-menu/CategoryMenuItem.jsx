@@ -17,7 +17,7 @@ export default function CategoryMenuItem({ products }) {
         <Col>
             <Card className="border-0 h-100">
                 <div className="overflow-hidden">
-                    <Card.Img variant="top" className="scale-transition" src={selectedProduct.imageUrl}/>
+                    <Card.Img variant="top" className="scale-transition" src={selectedProduct.image_url}/>
                 </div>
                 <Card.Body className="card-y-padding">
                     <Card.Title as="h5" className="fs-4 my-1">{selectedProduct.name}</Card.Title>

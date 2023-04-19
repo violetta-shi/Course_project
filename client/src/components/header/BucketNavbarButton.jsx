@@ -62,7 +62,7 @@ export default function BucketNavbarButton() {
                                 <Card className="border-0 mb-3" key={product.id}>
                                     <Row className="g-1">
                                         <div className="col-2">
-                                            <img src={product.imageUrl} className="img-fluid rounded-start" alt="..."/>
+                                            <img src={product.image_url} className="img-fluid rounded-start" alt="..."/>
                                         </div>
                                         <div className="col-10">
                                             <Card.Body className="hstack justify-content-between">

@@ -7,3 +7,57 @@ CREATE TABLE IF NOT EXISTS `user` (
     `password` VARCHAR(256) NOT NULL,
     `role` VARCHAR(256) NOT NULL
 ) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `category` (
+    `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(256) NOT NULL,
+    `image_url` VARCHAR(1024) NOT NULL
+) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `product` (
+    `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `grouping_key` VARCHAR(256) NOT NULL,
+    `category_id` BIGINT NOT NULL,
+    `name` VARCHAR(256) NOT NULL,
+    `image_url` VARCHAR(1024) NOT NULL,
+    `size` VARCHAR(256),
+    `price` DECIMAL(10,2) NOT NULL,
+    `weight` INTEGER NOT NULL,
+    FOREIGN KEY (`category_id`) REFERENCES `category`(`id`)
+) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `address` (
+    `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `city` VARCHAR(256) NOT NULL,
+    `street` VARCHAR(1024) NOT NULL,
+    `building` VARCHAR(256) NOT NULL,
+    `housing` VARCHAR(256),
+    `flat` VARCHAR(256),
+    `entrance` INTEGER,
+    `code` VARCHAR(256),
+    `floor` INTEGER
+) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `order` (
+    `id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `payment_method` VARCHAR(256) NOT NULL,
+    `delivery_timestamp` TIMESTAMP NOT NULL,
+    `name` VARCHAR(256) NOT NULL,
+    `email` VARCHAR(256),
+    `phone_number` VARCHAR(256) NOT NULL,
+    `comment` VARCHAR(1024),
+    `total_price` DECIMAL(10,2) NOT NULL,
+    `delivery_address_id` BIGINT NOT NULL,
+    `created_by` BIGINT,
+    FOREIGN KEY (`delivery_address_id`) REFERENCES `address`(`id`),
+    FOREIGN KEY (`created_by`) REFERENCES `user`(`id`)
+) ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `order_item` (
+    `order_id` BIGINT NOT NULL,
+    `product_id` BIGINT NOT NULL,
+    `amount` INTEGER NOT NULL,
+    PRIMARY KEY (`order_id`, `product_id`),
+    FOREIGN KEY (`order_id`) REFERENCES `order`(`id`),
+    FOREIGN KEY (`product_id`) REFERENCES `product`(`id`)
+) ENGINE = InnoDB;

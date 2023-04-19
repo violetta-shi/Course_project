@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {client} from "../api/client";
+import {authorizationHeader} from "./util/auth.utils";
 
 const groupBy = (arr, key) => {
     return arr.reduce((agg, element) => {
@@ -19,7 +20,7 @@ export const productsStateSelector = state => state.products;
 export const getProducts = createAsyncThunk(
     "products/getProducts",
     async (categoryId) => {
-        const response = await client.get(`/api/v1/categories/${categoryId}/products`);
+        const response = await client.get(`/api/v1/categories/${categoryId}/products`, authorizationHeader());
         return { categoryId, status: response.status, data: response.data };
     },
     {
@@ -42,7 +43,7 @@ export const productsSlice = createSlice({
             .addCase(getProducts.fulfilled, (state, action) => {
                 const { categoryId, status, data } = action.payload;
                 if (status === 200) {
-                    state.products[categoryId] = groupBy(data, "groupKey");
+                    state.products[categoryId] = groupBy(data, "grouping_key");
                 } else {
                     state.error = 'Произошла ошибка, попробуйте позже.'
                 }

@@ -25,21 +25,25 @@ export default function AppOrder() {
             address: {
                 city: "Минск"
             },
-            paymentMethod: "cash",
+            payment_method: "cash",
         }
     });
     const {
         address: { city, street, building } = {},
-        deliveryTimestamp,
+        delivery_timestamp,
         name,
-        phoneNumber
+        phone_number
     } = errors;
 
     const isEmpty = isBucketEmpty(items);
     const bucketPrice = countBucketPrice(items);
     const bucketItems = Object.values(items);
     const onSubmit = async (data) => {
-        await dispatch(createOrder({items, order: data}));
+        const order = {
+            ...data,
+            total_price: +bucketPrice,
+        };
+        await dispatch(createOrder({items, order}));
         dispatch(addNotification({
             background: "text-bg-success",
             title: "Заказ успешно создан",
@@ -116,7 +120,7 @@ export default function AppOrder() {
                                     <Col>
                                         <FloatingLabel controlId="order-entrance" label="Подъезд">
                                             <Form.Control className="form-orange" placeholder="подъезд" type="number"
-                                                          {...register("address.entrance")}/>
+                                                          {...register("address.entrance", { valueAsNumber: true })}/>
                                         </FloatingLabel>
                                     </Col>
                                     <Col>
@@ -128,7 +132,7 @@ export default function AppOrder() {
                                     <Col>
                                         <FloatingLabel controlId="order-floor" label="Этаж">
                                             <Form.Control className="form-orange" placeholder="этаж" type="number"
-                                                           {...register("address.floor")}/>
+                                                           {...register("address.floor", { valueAsNumber: true })}/>
                                         </FloatingLabel>
                                     </Col>
                                 </Row>
@@ -139,9 +143,9 @@ export default function AppOrder() {
                                     <Col>
                                         <FloatingLabel controlId="order-delivery-timestamp" label="Время доставки">
                                             <Form.Control className="form-orange" placeholder="время доставки"
-                                                          type="datetime-local" isInvalid={!!deliveryTimestamp}
-                                                          {...register("deliveryTimestamp", { required: "Обязательное поле" })}/>
-                                            <Form.Control.Feedback type="invalid">{deliveryTimestamp?.message}</Form.Control.Feedback>
+                                                          type="datetime-local" isInvalid={!!delivery_timestamp}
+                                                          {...register("delivery_timestamp", { required: "Обязательное поле" })}/>
+                                            <Form.Control.Feedback type="invalid">{delivery_timestamp?.message}</Form.Control.Feedback>
                                         </FloatingLabel>
                                     </Col>
                                 </Row>
@@ -164,15 +168,15 @@ export default function AppOrder() {
                                     </Col>
                                     <Col>
                                         <FloatingLabel controlId="order-phone-number" label="Номер телефона">
-                                            <Form.Control className="form-orange" placeholder="номер телефона" type="text" isInvalid={!!phoneNumber}
-                                                          {...register("phoneNumber", {
+                                            <Form.Control className="form-orange" placeholder="номер телефона" type="text" isInvalid={!!phone_number}
+                                                          {...register("phone_number", {
                                                               required: "Обязательное поле",
                                                               pattern: {
                                                                   value: /\+375[1-9]{9}/,
                                                                   message: 'Неверный формат номера'
                                                               }
                                                           })}/>
-                                            <Form.Control.Feedback type="invalid">{phoneNumber?.message}</Form.Control.Feedback>
+                                            <Form.Control.Feedback type="invalid">{phone_number?.message}</Form.Control.Feedback>
                                         </FloatingLabel>
                                     </Col>
                                 </Row>
@@ -183,7 +187,7 @@ export default function AppOrder() {
                                     <Col>
                                         <Controller
                                             render={({field: {onChange, value}}) => (
-                                                <ToggleButtonGroup type="radio" className="w-100" name="paymentMethod"
+                                                <ToggleButtonGroup type="radio" className="w-100" name="payment_method"
                                                                    onChange={onChange} value={value}>
                                                     <ToggleButton variant="outline-orange" id="order-payment-1" value={"cash"}>
                                                         Наличные
@@ -193,7 +197,7 @@ export default function AppOrder() {
                                                     </ToggleButton>
                                                 </ToggleButtonGroup>
                                             )}
-                                            name="paymentMethod"
+                                            name="payment_method"
                                             control={control}
                                         />
                                     </Col>

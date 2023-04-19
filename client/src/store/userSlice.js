@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
 import {client} from "../api/client";
+import {authorizationHeader} from "./util/auth.utils";
 
 const initialState = {
     state: 'loading',
@@ -10,7 +11,7 @@ const initialState = {
 export const getUsers = createAsyncThunk(
     'users/findAll',
     async () => {
-        const response = await client.get('/api/v1/users')
+        const response = await client.get('/api/v1/users', authorizationHeader())
         return response.data
     }
 )

@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {client} from "../api/client";
+import {authorizationHeader} from "./util/auth.utils";
 
 const initialState = {
     isLoading: false,
@@ -12,7 +13,7 @@ export const categoriesStateSelector = state => state.categories;
 export const getCategories = createAsyncThunk(
     "categories/getCategories",
     async () => {
-        const response = await client.get("/api/v1/categories");
+        const response = await client.get("/api/v1/categories", authorizationHeader());
         return { status: response.status, data: response.data };
     },
     {

@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {client} from "../api/client";
+import {authorizationHeader} from "./util/auth.utils";
 
 const initialState = {
     items: {},
@@ -26,7 +27,7 @@ export const createOrder = createAsyncThunk(
             items: Object.values(items),
             ...order,
         }
-        const response = await client.post("/api/v1/orders", body);
+        const response = await client.post("/api/v1/orders", body, authorizationHeader());
         return { status: response.status, data: response.data };
     }
 )

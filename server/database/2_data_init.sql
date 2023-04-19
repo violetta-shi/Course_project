@@ -1,5 +1,95 @@
-INSERT INTO `user` (`email`, `password`, `role`)
-VALUES ('admin@admin.com', '$2a$10$xVk1ygB72.UPQ5.j5ECxqesDvfGUxMLqH03r9cQ/eVJ9I9MR9TFQ.', 'ADMIN'), #pass: admin
-       ('example1@example.com', '$2a$10$RMYOEWmASW/5K9hkjkLfA.SEXX1q531X694M40RuyDp9WOs6Y0fl.', 'USER'), #pass: 1234
-       ('example2@example.com', '$2a$10$rRHZM0tbOsFE8kZw1E0iBOjdd3YAiz3ioWpIyBElet.VnzsIQIPGu', 'USER'), #pass: 1235
-       ('example3@example.com', '$2a$10$ydrRFP49JUUCfIL7e1fhFOXxqpJJuH7FD7AY31XqfEENZW1BtlSEa', 'USER'); #pass: 1236
+INSERT INTO `user` (`id`, `email`, `password`, `role`)
+VALUES (1, 'admin@admin.com', '$2a$10$xVk1ygB72.UPQ5.j5ECxqesDvfGUxMLqH03r9cQ/eVJ9I9MR9TFQ.', 'ADMIN'), #pass: admin
+       (2, 'example1@example.com', '$2a$10$RMYOEWmASW/5K9hkjkLfA.SEXX1q531X694M40RuyDp9WOs6Y0fl.', 'USER'), #pass: 1234
+       (3, 'example2@example.com', '$2a$10$rRHZM0tbOsFE8kZw1E0iBOjdd3YAiz3ioWpIyBElet.VnzsIQIPGu', 'USER'), #pass: 1235
+       (4, 'example3@example.com', '$2a$10$ydrRFP49JUUCfIL7e1fhFOXxqpJJuH7FD7AY31XqfEENZW1BtlSEa', 'USER'); #pass: 1236
+ALTER TABLE `user` AUTO_INCREMENT = 5;
+
+INSERT INTO `category` (`id`, `name`, `image_url`)
+VALUES (1, 'Новинки', '/static/img/category/category1.png'),
+       (2, 'Хиты', '/static/img/category/category2.png'),
+       (3, 'Выгодно сегодня', '/static/img/category/category3.png'),
+       (4, 'Суши-сеты', '/static/img/category/category4.png'),
+       (5, 'Суши и роллы', '/static/img/category/category5.png'),
+       (6, 'Лапша WOK', '/static/img/category/category6.png'),
+       (7, 'Сеты из горячего', '/static/img/category/category7.png'),
+       (8, 'Супы', '/static/img/category/category8.png'),
+       (9, 'Рамэны', '/static/img/category/category9.png'),
+       (10, 'Рис', '/static/img/category/category10.png'),
+       (11, 'Поке и Салаты', '/static/img/category/category11.png'),
+       (12, 'Донбури', '/static/img/category/category12.png'),
+       (13, 'Обеденное меню', '/static/img/category/category13.png'),
+       (14, 'Вегетерианское меню', '/static/img/category/category14.png'),
+       (15, 'Детское меню', '/static/img/category/category15.png'),
+       (16, 'Десерты', '/static/img/category/category16.png'),
+       (17, 'Напитки', '/static/img/category/category17.png'),
+       (18, 'Гарниры и соусы', '/static/img/category/category18.png');
+ALTER TABLE `category` AUTO_INCREMENT = 19;
+
+INSERT INTO `product` (`id`, `grouping_key`, `category_id`, `name`, `image_url`, `size`, `price`, `weight`)
+VALUES (1, '1', 1, 'LOVE IS 💓', '/static/img/product/product_1_1.png', NULL, 52.90, 1050),
+       (2, '2', 1, 'TOKINY HUB 💘', '/static/img/product/product_1_2.png', NULL, 54.90, 860),
+       (3, '3', 1, 'YAMI', '/static/img/product/product_1_3.png', NULL, 36.90, 910),
+       (4, '4', 1, 'НЕМО', '/static/img/product/product_1_4.png', NULL, 39.90, 970),
+       (5, '5', 1, 'ШРИМП ФРАЙ СЕТ', '/static/img/product/product_1_5.png', NULL, 34.90, 660),
+       (6, '6', 2, 'УЖАСНО ВКУСНО', '/static/img/product/product_2_1.png', NULL, 59.90, 1230),
+       (7, '7', 2, 'Сет NEW ФРАЙ', '/static/img/product/product_2_2.png', NULL, 42.90, 1110),
+       (8, '8', 2, 'Филадельфия', '/static/img/product/product_2_3.png', '4 шт.', 9.90, 110),
+       (9, '8', 2, 'Филадельфия', '/static/img/product/product_2_3.png', '8 шт.', 17.90, 240),
+       (10, '9', 2, 'Том Ям с креветками 🌶', '/static/img/product/product_2_4.png', NULL, 17.90, 420),
+       (11, '10', 2, 'Куранчи фрай', '/static/img/product/product_2_5.png', '10 шт.', 14.90, 264),
+       (12, '11', 3, 'Сет TokiNY', '/static/img/product/product_3_1.png', NULL, 31.90, 1300),
+       (13, '12', 3, 'RABBIT 🐇 SET', '/static/img/product/product_3_2.png', NULL, 49.90, 1145),
+       (14, '13', 3, 'HAPPY NEW SET 2023 ☃️', '/static/img/product/product_3_3.png', NULL, 111.90, 2450),
+       (15, '14', 3, 'УЖАСНО ВКУСНО', '/static/img/product/product_3_4.png', NULL, 59.90, 1230),
+       (16, '15', 3, 'КАК Я ВСТРЕТИЛ ВАШУ МАМУ', '/static/img/product/product_3_5.png', NULL, 54.90, 1155),
+       (17, '16', 3, 'Донбури с сыром Тофу', '/static/img/product/product_3_6.png', NULL, 10.90, 340),
+       (18, '17', 4, 'ХАЛЯВА 34,90 NEW', '/static/img/product/product_4_1.png', NULL, 34.90, 853),
+       (19, '18', 4, 'СЭНСЭЙ', '/static/img/product/product_4_2.jpg', NULL, 33.92, 960),
+       (20, '19', 5, 'Балтимор 🌶', '/static/img/product/product_5_1.png', '4 шт.', 5.90, 90),
+       (21, '19', 5, 'Балтимор 🌶', '/static/img/product/product_5_1.png', '8 шт.', 10.90, 205),
+       (22, '20', 5, 'Висконсин 🌶', '/static/img/product/product_5_2.png', '4 шт.', 5.90, 105),
+       (23, '20', 5, 'Висконсин 🌶', '/static/img/product/product_5_2.png', '8 шт.', 10.90, 210),
+       (24, '21', 5, 'Колорадо', '/static/img/product/product_5_3.png', '4 шт.', 6.90, 85),
+       (25, '21', 5, 'Колорадо', '/static/img/product/product_5_3.png', '8 шт.', 12.90, 190),
+       (26, '22', 5, 'Сент-Клэр 🌶', '/static/img/product/product_5_4.png', '4 шт.', 8.90, 120),
+       (27, '22', 5, 'Сент-Клэр 🌶', '/static/img/product/product_5_4.png', '8 шт.', 16.90, 270),
+       (28, '23', 5, 'Смоки-Хилл', '/static/img/product/product_5_5.png', '4 шт.', 8.90, 110),
+       (29, '23', 5, 'Смоки-Хилл', '/static/img/product/product_5_5.png', '8 шт.', 15.90, 240),
+       (30, '24', 5, 'Джорджия 🌶', '/static/img/product/product_5_6.png', '4 шт.', 8.90, 120),
+       (31, '24', 5, 'Джорджия 🌶', '/static/img/product/product_5_6.png', '8 шт.', 16.90, 260),
+       (32, '25', 5, 'Детройт', '/static/img/product/product_5_7.png', '4 шт.', 5.90, 121),
+       (33, '25', 5, 'Детройт', '/static/img/product/product_5_7.png', '8 шт.', 9.90, 263),
+       (34, '26', 5, 'Спрингфилд', '/static/img/product/product_5_8.png', '4 шт.', 9.90, 125),
+       (35, '26', 5, 'Спрингфилд', '/static/img/product/product_5_8.png', '8 шт.', 17.90, 270),
+       (36, '27', 5, 'Фиджи 🌶', '/static/img/product/product_5_9.png', '4 шт.', 8.90, 110),
+       (37, '27', 5, 'Фиджи 🌶', '/static/img/product/product_5_9.png', '8 шт.', 15.90, 240),
+       (38, '28', 5, 'Остин', '/static/img/product/product_5_10.png', '4 шт.', 5.90, 117),
+       (39, '28', 5, 'Остин', '/static/img/product/product_5_10.png', '8 шт.', 9.90, 255),
+       (40, '29', 5, 'Монтана 🌶', '/static/img/product/product_5_11.png', '4 шт.', 11.90, 117),
+       (41, '29', 5, 'Монтана 🌶', '/static/img/product/product_5_11.png', '8 шт.', 22.90, 255),
+       (42, '30', 5, 'Арканзас', '/static/img/product/product_5_12.png', '4 шт.', 10.90, 120),
+       (43, '30', 5, 'Арканзас', '/static/img/product/product_5_12.png', '8 шт.', 19.90, 260),
+       (44, '31', 6, 'Фунчоза с цыпленком-гриль 🌶', '/static/img/product/product_6_1.png', 'M', 12.90, 280),
+       (45, '31', 6, 'Фунчоза с цыпленком-гриль 🌶', '/static/img/product/product_6_1.png', 'L', 16.90, 420),
+       (46, '32', 6, 'Фунчоза с тигровыми креветками', '/static/img/product/product_6_2.png', 'M', 17.90, 280),
+       (47, '32', 6, 'Фунчоза с тигровыми креветками', '/static/img/product/product_6_2.png', 'L', 22.90, 420),
+       (48, '33', 7, 'БРЮС ВСЕМОГУЩИЙ', '/static/img/product/product_7_1.png', NULL, 59.90, 1500),
+       (49, '34', 7, 'ГАСТРОСЕТ', '/static/img/product/product_7_2.png', NULL, 50.90, 1445),
+       (50, '35', 8, 'Том Ям с креветками 🌶', '/static/img/product/product_8_1.png', NULL, 17.90, 420),
+       (51, '36', 8, 'Мисо суп 🥦', '/static/img/product/product_8_2.png', NULL, 7.90, 350),
+       (52, '37', 9, 'Томатный рамэн чикен-чили 🌶', '/static/img/product/product_9_1.png', NULL, 13.90, 580),
+       (53, '38', 9, 'Рамэн Кимчи с ростбифом 🌶', '/static/img/product/product_9_2.png', NULL, 19.90,  570),
+       (54, '39', 10, 'Тяхан с цыпленком-гриль', '/static/img/product/product_10_1.png', NULL, 12.90, 360),
+       (55, '40', 11, 'Поке Боул с цыпленком Терияки', '/static/img/product/product_11_1.png', NULL, 12.90, 250),
+       (56, '41', 11, 'Поке Боул с креветкой 🌶', '/static/img/product/product_11_2.png', NULL, 24.90, 300),
+       (57, '42', 12, 'Донбури с тунцом', '/static/img/product/product_12_1.png', NULL, 25.90, 315),
+       (58, '43', 13, 'ОБЕД с цыпленком', '/static/img/product/product_13_1.png', NULL, 17.90, 600),
+       (59, '44', 13, 'ЛАНЧ с говядиной', '/static/img/product/product_13_2.png', NULL, 20.90, 600),
+       (60, '45', 14, 'ОБЕД вегетарианский 🥦', '/static/img/product/product_14_1.png', NULL, 17.90, 600),
+       (61, '46', 15, 'Детский комплекс с лапшой', '/static/img/product/product_15_1.png', NULL, 13.90, 430),
+       (62, '47', 16, 'Десерт Манго-маракуйя', '/static/img/product/product_16_1.png', NULL, 4.55, 90),
+       (63, '48', 17, 'Морс с тимьяном', '/static/img/product/product_17_1.png', NULL, 4.50, 500),
+       (64, '49', 17, 'Напиток имбирно-лимонный', '/static/img/product/product_17_2.png', NULL, 4.50, 500),
+       (65, '50', 18, 'Соевый соус', '/static/img/product/product_18_1.png', NULL, 1.50, 50);
+ALTER TABLE `category` AUTO_INCREMENT = 66;

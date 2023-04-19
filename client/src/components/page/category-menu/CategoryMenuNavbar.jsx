@@ -22,7 +22,7 @@ export default function CategoryMenuNavbar() {
                 <Nav.Link as={NavLink} to={`/menu/${category.id}`}
                           className="btn btn-gray-orange my-1 justify-content-between d-flex" key={category.id}>
                     <span>{category.name}</span>
-                    <span>{category.productCount}</span>
+                    <span>{category.product_count}</span>
                 </Nav.Link>
             ))}
         </Nav>

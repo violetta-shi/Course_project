@@ -15,6 +15,11 @@ export default ({mode}) => {
           target: env.VITE_BACK_END_URL,
           changeOrigin: true,
           secure: false,
+        },
+        "^/static": {
+          target: env.VITE_BACK_END_URL,
+          changeOrigin: true,
+          secure: false,
         }
       }
     }

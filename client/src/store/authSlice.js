@@ -1,25 +1,11 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {client} from "../api/client";
+import {authorizationHeader, clearAccessToken, storeAccessToken} from "./util/auth.utils";
 
 const initialState = {
     isLoading: false,
     currentUser: undefined,
     loginErrorMessage: null
-}
-
-const ACCESS_TOKEN_KEY = 'access-token';
-const getAccessToken = () => {
-    return window.localStorage.getItem(ACCESS_TOKEN_KEY);
-}
-const storeAccessToken = (value) => {
-    return window.localStorage.setItem(ACCESS_TOKEN_KEY, value);
-}
-const clearAccessToken = () => {
-    window.localStorage.removeItem(ACCESS_TOKEN_KEY);
-}
-const authorizationHeader = () => {
-    const accessToken = getAccessToken();
-    return accessToken ? { 'Authorization': `Bearer ${accessToken}` } : {};
 }
 
 export const authStateSelector = state => state.auth;
