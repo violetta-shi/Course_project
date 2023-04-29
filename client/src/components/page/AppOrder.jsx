@@ -172,7 +172,7 @@ export default function AppOrder() {
                                                           {...register("phone_number", {
                                                               required: "Обязательное поле",
                                                               pattern: {
-                                                                  value: /\+375[1-9]{9}/,
+                                                                  value: /\+375\d{9}/,
                                                                   message: 'Неверный формат номера'
                                                               }
                                                           })}/>
