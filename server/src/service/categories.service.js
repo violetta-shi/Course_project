@@ -1,7 +1,7 @@
-const db = require('../persistence/mysql');
+const { pool } = require('../persistence/mysql');
 
 const findAll = async () => {
-    const [categories, ] = await db.query(`
+    const [categories, ] = await pool.query(`
         SELECT id, name, image_url, COALESCE(p_count.product_count, 0) AS product_count
         FROM category c
         LEFT OUTER JOIN (SELECT category_id, COUNT(DISTINCT grouping_key) AS product_count

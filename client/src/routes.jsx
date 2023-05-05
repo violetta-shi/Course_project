@@ -5,6 +5,7 @@ import AppMenu from "./components/page/AppMenu";
 import AppCategoryMenu from "./components/page/AppCategoryMenu";
 import ErrorPage from "./components/ErrorPage";
 import AppOrder from "./components/page/AppOrder";
+import AppProduct from "./components/page/AppProduct";
 
 export const router = createBrowserRouter(createRoutesFromElements(
     <Route element={<App/>}>
@@ -12,6 +13,7 @@ export const router = createBrowserRouter(createRoutesFromElements(
         <Route path="/menu" element={<AppMenu/>}/>
         <Route path="/menu/:id" element={<AppCategoryMenu/>}/>
         <Route path="/order" element={<AppOrder/>}/>
+        <Route path="/product" element={<AppProduct/>}/>
         <Route path="/*" element={<ErrorPage/>}/>
     </Route>
 ));

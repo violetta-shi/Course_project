@@ -11,6 +11,7 @@ const groupBy = (arr, key) => {
 
 const initialState = {
     isLoading: false,
+    isCreating: false,
     products: {},
     error: null,
 }
@@ -29,12 +30,29 @@ export const getProducts = createAsyncThunk(
             return products[categoryId] === undefined;
         }
     }
-)
+);
+
+export const createProduct = createAsyncThunk(
+    "products/createProduct",
+    async (body) => {
+        const {image, ...data} = body;
+        const formData = new FormData();
+        formData.append("image", image[0]);
+        formData.append("data", JSON.stringify(data));
+        const response = await client.post(`/api/v1/products`, formData, authorizationHeader());
+        return { status: response.status, data: response.data };
+    }
+);
 
 export const productsSlice = createSlice({
     name: "products",
     initialState,
-    reducers: {},
+    reducers: {
+        clearFetchedProducts: (state, action) => {
+            const categoryId = action.payload;
+            delete state.products[categoryId];
+        },
+    },
     extraReducers(builder) {
         builder
             .addCase(getProducts.pending, (state) => {
@@ -49,7 +67,19 @@ export const productsSlice = createSlice({
                 }
                 state.isLoading = false;
             })
+            .addCase(createProduct.pending, (state) => {
+                state.isCreating = true;
+            })
+            .addCase(createProduct.fulfilled, (state, action) => {
+                const { status, data } = action.payload;
+                if (status !== 200) {
+                    state.error = data?.message || 'Произошла ошибка, попробуйте позже.'
+                }
+                state.isCreating = false;
+            })
     }
 });
+
+export const { clearFetchedProducts } = productsSlice.actions;
 
 export default productsSlice.reducer;

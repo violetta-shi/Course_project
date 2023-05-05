@@ -24,7 +24,8 @@ app.use('/static', express.static(path.join(__dirname, 'public')));
 // routes
 app.use('/api/v1/users', users);
 app.use('/api/v1/categories', categories);
-app.use('/api/v1/categories/:categoryId/products', products);
+app.use('/api/v1/categories/:categoryId/products', products.categoryProductsRouter);
+app.use('/api/v1/products', products.productsRouter);
 app.use('/api/v1/orders', orders);
 app.use('/api/v1/auth', auth);
 

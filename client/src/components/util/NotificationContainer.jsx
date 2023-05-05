@@ -17,9 +17,11 @@ export default function NotificationContainer() {
                     <Toast.Header className={background}>
                         <strong className="me-auto">{title}</strong>
                     </Toast.Header>
-                    <Toast.Body>
-                        <p className="mb-0">{message}</p>
-                    </Toast.Body>
+                    {message && (
+                        <Toast.Body>
+                            <p className="mb-0">{message}</p>
+                        </Toast.Body>
+                    )}
                 </Toast>
             ))}
         </ToastContainer>
