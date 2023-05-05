@@ -11,6 +11,15 @@ const findAll = async () => {
     return categories;
 };
 
+const createCategory = async (category) => transactional(async (connection) => {
+    const args = [category.name, category.image_url]
+    await connection.query(
+        `INSERT INTO product (name, image_url) VALUES ?`,
+        [args]
+    );
+});
+
 module.exports = {
     findAll,
+    createCategory
 };

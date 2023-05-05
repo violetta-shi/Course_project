@@ -25,6 +25,19 @@ export const getCategories = createAsyncThunk(
 
 )
 
+export const createCategory = createAsyncThunk(
+    "categories/createCategory",
+    async(body)=>{
+        const{image, ...data} = body;
+        const formData = new FormData();
+        formData.append("image", image[0]);
+        formData.append("data", JSON.stringify(data));
+        const response = await client.post("/api/v1/categories", formData, authorizationHeader());
+        return {status: response.status, data: response.data}
+    }
+
+)
+
 export const categoriesSlice = createSlice({
     name: "categories",
     initialState,
@@ -42,6 +55,16 @@ export const categoriesSlice = createSlice({
                     state.error = 'Ошибка загрузки. Попробуйте подождать и обновить страницу.'
                 }
                 state.isLoading = false;
+            })
+            .addCase(createCategory.pending, (state)=>{
+                state.isCreating = true;
+            })
+            .addCase(createCategory.fulfilled, (state, action)=>{
+                const {status, data} = action.payload;
+                if(status !== 200){
+                    state.erroe = data?.message || 'Произошла ошибка, попробуй позже'
+                }
+                state.isCreating = false;
             })
     }
 });

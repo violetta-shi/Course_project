@@ -38,6 +38,8 @@ export default function UserNavbarButton() {
                         <Dropdown.Item as="button" onClick={() => navigate("/orders")}>Заказы</Dropdown.Item>
                         {currentUser?.role === 'ADMIN'
                             && <Dropdown.Item as="button" onClick={() => navigate("/product")}>Блюда</Dropdown.Item>}
+                        {currentUser?.role === 'ADMIN'
+                            && <Dropdown.Item as="button" onClick={() => navigate("/category")}>Категории</Dropdown.Item>}
                         <Dropdown.Divider/>
                         <Dropdown.Item as="button" onClick={handleLogout}>Выйти</Dropdown.Item>
                     </Dropdown.Menu>
