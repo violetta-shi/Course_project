@@ -21,7 +21,7 @@ export default function AppCategory(){
     const { name, image} = errors;
 
     const onSubmit = async (data) => {
-        await dispatch(createCategory());
+        await dispatch(createCategory(data));
         dispatch(addNotification({
             background: "text-bg-success",
             title: "Категория добавлена"
@@ -45,7 +45,7 @@ export default function AppCategory(){
                                 <Row className="mt-3">
                                     <Col>
                                         <FloatingLabel label="Название" controlId="category-name">
-                                            Form.Control className="form-orange" placeholder="название" type="text"
+                                            <Form.Control className="form-orange" placeholder="название" type="text"
                                             isInvalid={!!name}
                                             {...register("name", {required: "Обязательное поле"})}/>
                                             <Form.Control.Feedback
@@ -59,7 +59,7 @@ export default function AppCategory(){
                                 <Row className="mt-3">
                                     <Col>
                                         <Form.Group controlId="category-image">
-                                            <Form.Control type="file" className="form-orange" size = "lg" accept=".png .jpg"
+                                            <Form.Control type="file" className="form-orange" size = "lg" accept=".png, .jpg"
                                                           isInvalid={!!image}
                                                 {...register("image", {required:"Необходимо выбрать изображение"})}/>
                                             <Form.Control.Feedback

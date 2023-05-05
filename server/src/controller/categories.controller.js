@@ -1,4 +1,6 @@
 const categoriesService = require('../service/categories.service');
+const { uploadToLocal } = require('../middleware/multipartform.middleware');
+const { validateImageExtension } = require("../service/validator/file.validator");
 
 const findAll = async (req, res, next) => {
     try {

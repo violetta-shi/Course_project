@@ -1,4 +1,5 @@
-const { pool } = require('../persistence/mysql');
+const { pool, transactional } = require('../persistence/mysql');
+
 
 const findAll = async () => {
     const [categories, ] = await pool.query(`
@@ -12,10 +13,9 @@ const findAll = async () => {
 };
 
 const createCategory = async (category) => transactional(async (connection) => {
-    const args = [category.name, category.image_url]
-    await connection.query(
-        `INSERT INTO product (name, image_url) VALUES ?`,
-        [args]
+    await connection.execute(
+        `INSERT INTO category (name, image_url) VALUES (?,?)`,
+        [category.name, category.image_url]
     );
 });
 

@@ -4,10 +4,7 @@ const categoriesController = require('../controller/categories.controller');
 const {ensureAdminRole} = require("../middleware/authentication.middleware");
 const {upload} = require("../middleware/multipartform.middleware");
 
-categoryRouter.route('/')
-    .post(ensureAdminRole, upload.single('image'), categoriesController.createCategory());
-
 router.route('/')
-    .get(categoriesController.findAll);
-
+    .get(categoriesController.findAll)
+    .post(ensureAdminRole, upload.single('image'), categoriesController.createCategory);
 module.exports = router;
