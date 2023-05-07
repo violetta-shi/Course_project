@@ -13,6 +13,7 @@ const initialState = {
     isLoading: false,
     isCreating: false,
     products: {},
+    statistics: undefined,
     error: null,
 }
 
@@ -29,6 +30,15 @@ export const getProducts = createAsyncThunk(
             const { products } = productsStateSelector(getState());
             return products[categoryId] === undefined;
         }
+    }
+);
+
+export const getProductStatistics = createAsyncThunk(
+    "products/getProductStatistics",
+    async ({start, end}) => {
+        const response = await client.get(`/api/v1/products/statistics?startMonth=${start}&endMonth=${end}`,
+            authorizationHeader());
+        return { status: response.status, data: response.data };
     }
 );
 
@@ -66,6 +76,17 @@ export const productsSlice = createSlice({
                     state.error = 'Произошла ошибка, попробуйте позже.'
                 }
                 state.isLoading = false;
+            })
+            .addCase(getProductStatistics.pending, (state) => {
+                state.statistics = undefined;
+            })
+            .addCase(getProductStatistics.fulfilled, (state, action) => {
+                const { status, data } = action.payload;
+                if (status === 200) {
+                    state.statistics = data;
+                } else {
+                    state.error = 'Произошла ошибка, попробуйте позже.'
+                }
             })
             .addCase(createProduct.pending, (state) => {
                 state.isCreating = true;

@@ -12,6 +12,25 @@ const findAllByCategoryId = async (req, res, next) => {
     }
 };
 
+const getProductStatistics = async (req, res, next) => {
+    const getDefaultStartDate = () => {
+        const now = new Date();
+        now.setMonth(now.getMonth() - 3);
+        return new Date(now.getFullYear(), now.getMonth(), 1);
+    }
+    try {
+        const { startMonth, endMonth } = req.query; //should be date in format "yyyy-mm"
+        const startDate = (startMonth && new Date(startMonth)) || getDefaultStartDate();
+        const endDate = (endMonth && new Date(endMonth)) || new Date();
+        const endDateExclusive = new Date(endDate.getFullYear(), endDate.getMonth() + 1, 1)
+
+        res.json(await productsService.getProductStatistics(startDate, endDateExclusive));
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+}
+
 const createProduct = async (req, res, next) => {
     try {
         const image = req.file;
@@ -39,5 +58,6 @@ const createProduct = async (req, res, next) => {
 
 module.exports = {
     findAllByCategoryId,
+    getProductStatistics,
     createProduct,
 };

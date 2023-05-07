@@ -6,6 +6,8 @@ const { upload } = require('../middleware/multipartform.middleware');
 
 productsRouter.route('/')
     .post(ensureAdminRole, upload.single('image'), productsController.createProduct);
+productsRouter.route('/statistics')
+    .get(ensureAdminRole, productsController.getProductStatistics);
 
 categoryProductsRouter.route('/')
     .get(productsController.findAllByCategoryId);

@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS `order` (
     `total_price` DECIMAL(10,2) NOT NULL,
     `delivery_address_id` BIGINT NOT NULL,
     `created_by` BIGINT,
+    `created_at` TIMESTAMP NOT NULL DEFAULT now(),
     FOREIGN KEY (`delivery_address_id`) REFERENCES `address`(`id`),
     FOREIGN KEY (`created_by`) REFERENCES `user`(`id`)
 ) ENGINE = InnoDB;

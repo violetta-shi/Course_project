@@ -26,6 +26,12 @@ export default function UserNavbarButton() {
         navigate('/');
     };
 
+    const adminLink = (url, text) => {
+        if (currentUser?.role === 'ADMIN') {
+            return (<Dropdown.Item as="button" onClick={() => navigate(url)}>{text}</Dropdown.Item>);
+        }
+    }
+
     return (
         <>
             {currentUser && (
@@ -36,10 +42,9 @@ export default function UserNavbarButton() {
 
                     <Dropdown.Menu>
                         <Dropdown.Item as="button" onClick={() => navigate("/orders")}>Заказы</Dropdown.Item>
-                        {currentUser?.role === 'ADMIN'
-                            && <Dropdown.Item as="button" onClick={() => navigate("/product")}>Блюда</Dropdown.Item>}
-                        {currentUser?.role === 'ADMIN'
-                            && <Dropdown.Item as="button" onClick={() => navigate("/category")}>Категории</Dropdown.Item>}
+                        {adminLink("/product", "Блюда")}
+                        {adminLink("/category", "Категории")}
+                        {adminLink("/dashboard", "Статистика")}
                         <Dropdown.Divider/>
                         <Dropdown.Item as="button" onClick={handleLogout}>Выйти</Dropdown.Item>
                     </Dropdown.Menu>
